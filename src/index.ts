@@ -5,17 +5,14 @@ import express from 'express'
 import cors from 'cors'
 import multer from 'multer'
 
-const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
 const PORT = 3000
+const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
+const upload = multer({ storage: multer.memoryStorage() })
 const server = express()
 server.use(express.json())
-server.use(cors({
-    origin: 'http://localhost:5173',
-    methods: 'GET, POST',
-    credentials: true
-}))
-const upload = multer({ storage: multer.memoryStorage() })
+server.use(cors({ origin: 'http://localhost:5173', methods: 'GET, POST', credentials: true }))
 let log = new Logger('./index.ts')
+
 
 AppDataSource.initialize().then(async () => {
     server.get('/api/thread', async (_, res) => res.send(await getThread()))
@@ -24,7 +21,6 @@ AppDataSource.initialize().then(async () => {
         await insert(req.body.msg, req.file? req.file: null).catch(err => res.status(500).send(err.json()))
         res.status(201).send()
     })
-
     server.listen(PORT, () => console.log('=> Server running'))
 }).catch(error => log.handle(error))
 

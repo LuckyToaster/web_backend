@@ -24,8 +24,8 @@ export class Logger {
     private async logFileExists(): Promise<boolean> {
         return new Promise<boolean>(resolve => {
             fs.promises.access(Logger.FILEPATH, fs.constants.F_OK)
-                .then(ok => resolve(true))
-                .catch(err => resolve(false))
+                .then(_ => resolve(true))
+                .catch(_ => resolve(false))
         })
     }
 
@@ -53,7 +53,7 @@ export class Logger {
 
     private writeToLog(text: string) {
         fs.promises.appendFile(Logger.FILEPATH, text)
-            .catch(err => console.error(`cannot write to log file ${Logger.FILEPATH}, ${Logger.LOGGERFILENAME}: ${err}`))
+            .catch(err =>  console.error(`cannot write to log file ${Logger.FILEPATH}, ${Logger.LOGGERFILENAME}: ${err}`))
     }
 
     handle(error: any, line_or_function?: string, comment?: string) {
