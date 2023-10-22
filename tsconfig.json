@@ -1,0 +1,16 @@
+{
+   "compilerOptions": {
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "target": "es6",   // Change the target to ES6
+      "module": "commonjs",
+      "esModuleInterop": true, // chatgpt told me to change this so that i can use the normal import syntax for express
+      "moduleResolution": "node",
+      "outDir": "./build",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true
+   }
+}

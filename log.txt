@@ -1,0 +1,2 @@
+NaN - ./index.ts inset - couldnt insert media - QueryFailedError: null value in column "post_id" of relation "media" violates not-null constraint
+
