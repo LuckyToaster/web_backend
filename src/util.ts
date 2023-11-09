@@ -6,7 +6,7 @@ import fs from 'fs'
 export { getThread, insert, nextPostId }
 
 const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
-const log = new Logger('./postController.ts');
+const log = new Logger('./util.ts');
 
 async function getThread(): Promise<any> {
     return await AppDataSource.manager.find(Post)
