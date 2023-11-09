@@ -32,7 +32,7 @@ server.get('/api/media/:id.:ext', async (req, res) =>
 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
     await insert(req.body.msg, req.file ? req.file : null).catch(err => {
-        res.status(500).send(err.json()) 
+        res.status(500).send(err) 
         log.handle(err)
     })
     res.status(201).send()
