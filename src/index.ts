@@ -9,13 +9,13 @@ import path from 'path'
 let log = new Logger('./index.ts')
 
 const PORT = 3000
+const upload = multer({ storage: multer.memoryStorage() })
 const server = express()
 server.use(express.json())
 server.use(cors({ 
     origin: 'http://localhost:5173', 
     methods: 'GET, POST', credentials: true 
 }))
-const upload = multer({ storage: multer.memoryStorage() })
 
 AppDataSource.initialize()
     .then(async () => console.log("=> DB Connection established"))
@@ -32,7 +32,7 @@ server.get('/api/media/:id.:ext', async (req, res) =>
 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
     await insert(req.body.msg, req.file ? req.file : null).catch(err => {
-        res.status(500).send(err.json()) // .send(err.json())
+        res.status(500).send(err.json()) 
         log.handle(err)
     })
     res.status(201).send()
