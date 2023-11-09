@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Post, Media } from "./entities"
+import { Post } from "./entities"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: "gogocharity",
     synchronize: true,
     logging: false,
-    entities: [Post, Media],
+    entities: [Post],
     migrations: [],
     subscribers: [],
 })

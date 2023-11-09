@@ -32,7 +32,7 @@ export class Logger {
     private createLogFile() {
         fs.writeFile(Logger.FILEPATH, '', 'utf8', (err) => {
             if (err) console.error(`Error creating Log file ${Logger.LOGGERFILENAME}: ${err}`)
-            else console.log(`File "${Logger.FILEPATH}" has been created with the content.`)
+            else console.log(`=> File "${Logger.FILEPATH}" has been created with the content.`)
         })
     }
 
@@ -57,7 +57,8 @@ export class Logger {
     }
 
     handle(error: any, line_or_function?: string, comment?: string) {
-        const logMsg = `${++this.logCount} - ${this.srcFilename} ${line_or_function} - ${comment} - ${error}\n\n`
+        const logMsg = `${++this.logCount} - ${new Date().toString()} - 
+            ${this.srcFilename} ${line_or_function} - ${comment} - ${error}\n\n`
         console.error(logMsg)
         this.writeToLog(logMsg)
     }

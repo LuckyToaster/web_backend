@@ -20,17 +20,7 @@ export class Post {
 
     @Column({ type: 'boolean', default: 'false' })
     media: boolean
-}
 
-@Entity()
-export class Media {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @OneToOne(() => Post, post => post.id, { nullable: false })
-    @JoinColumn({ name: 'post_id' })
-    post_id: number;
-
-    @Column({ type: 'bytea' })
-    data: Buffer;
+    @Column({ type: 'text', default: null})
+    mediaMimeType: string
 }
