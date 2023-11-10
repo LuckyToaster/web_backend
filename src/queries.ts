@@ -1,5 +1,5 @@
-import { AppDataSource } from "./data-source"
-import { Post } from "./entities";
+import { AppDataSource } from "./orm"
+import { Post } from "./orm";
 import { Logger } from "./logger";
 import fs from 'fs'
 
@@ -24,7 +24,7 @@ async function insert(msg: string, f?: Express.Multer.File) {
     const p = new Post()
     p.msg = msg
     if (f) {
-        if (f.size > 2097151) throw new Error(`${f.originalname} exceeds 2MB max size`)
+        if (f.size > 8388608) throw new Error(`${f.originalname} exceeds 8MB max size`)
         if (!MIMES.includes(f.mimetype)) throw new Error(`${f.originalname} of type ${f.mimetype} not supported`)
         const ext = f.mimetype.split('/')[1]
         fs.writeFile(`./media/${await nextPostId()}.${ext}`, f.buffer, e => log.handle(e, 'insert', 'error saving media'))
