@@ -10,10 +10,12 @@ import {
 @Entity()
 export class Post {
     @PrimaryGeneratedColumn() id: number
-    @Column({ type: 'text', nullable: false }) msg: string
+    @Column({type: 'text', nullable: false}) msg: string
     @CreateDateColumn() date: Date
-    @Column({ type: 'boolean', default: 'false' }) media: boolean
-    @Column({ type: 'text', default: null}) mediaMimeType: string
+    @Column({type: 'boolean', default: 'false'}) media: boolean
+    @Column({type: 'text', default: null}) mediaMimeType: string
+    @Column({type: "integer", default: 0}) likes: number
+    @Column({type: "integer", default: 0}) dislikes: number
 }
 
 import "reflect-metadata"

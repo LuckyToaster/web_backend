@@ -3,7 +3,7 @@ import { Post } from "./orm";
 import { Logger } from "./logger";
 import fs from 'fs'
 
-export { getThread, insert, nextPostId }
+export { getThread, insert, nextPostId, like, dislike }
 
 const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
 const log = new Logger('./util.ts');
@@ -18,6 +18,21 @@ async function nextPostId(): Promise<number> {
         .query("select max(id) from post")
         .catch(e => log.handle(e, 'nextPostId', 'cannot select latest id'))
     return maxId[0].max + 1
+}
+
+// test this method
+async function postExists(id: number): Promise<boolean> {
+    return await AppDataSource.getRepository(Post).exist({where: {id: id}})
+}
+
+async function like(id: string) {
+    await AppDataSource.getRepository(Post)
+        .query(`update post set likes = likes + 1 where id = ${parseInt(id, 10)}`)
+}
+
+async function dislike(id: string) {
+    await AppDataSource.getRepository(Post)
+        .query(`update post set dislikes = dislikes + 1 where id = ${parseInt(id, 10)}`)
 }
 
 async function insert(msg: string, f?: Express.Multer.File) {
