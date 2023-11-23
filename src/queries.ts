@@ -51,11 +51,11 @@ async function dislike(id: string) {
         .query(`update post set dislikes = dislikes + 1 where id = ${parseInt(id, 10)}`)
 }
 
-async function insertPayment(date: Date, stripeId: string, amount: string) {
+async function insertPayment(id: string, amount: string, receiptUrl: string) {
     const p = new Payment()         
-    p.date = date
-    p.stripeId = stripeId 
+    p.stripeId = id 
     p.amount = amount
+    p.receiptUrl = receiptUrl
     await AppDataSource.manager.save(p)
         .catch(e => log.handle(e, 'insertPayment'))
 }

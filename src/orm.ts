@@ -44,6 +44,9 @@ export class Payment {
 
     @Column({type: 'numeric', precision: 8, scale: 2}) 
     amount: string
+
+    @Column({type: 'text', default: 'false'})
+    receiptUrl: string
 }
 
 import "reflect-metadata"

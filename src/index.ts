@@ -1,4 +1,4 @@
-import { getThread, insertPost, nextPostId, like, dislike, postExists} from './queries'
+import { getThread, insertPost, insertPayment, nextPostId, like, dislike, postExists} from './queries'
 import { AppDataSource } from "./orm"
 import { Logger } from "./logger"
 import express from 'express'
@@ -59,7 +59,9 @@ server.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   }
   // Handle the event
   console.log(`Unhandled event type ${event.type}`);
-  console.log(event)
+  console.log(req.body)
+
+  insertPayment(req.body.id, req.body.data.object.amount, req.body.data.object.receiptUrl)
   // Return a 200 response to acknowledge receipt of the event
   res.send(); // is this necessary?
 });
