@@ -61,7 +61,7 @@ export const AppDataSource = new DataSource({
     database: "gogocharity",
     synchronize: true,
     logging: false,
-    entities: [Post],
+    entities: [Post, Payment],
     migrations: [],
     subscribers: [],
 })
