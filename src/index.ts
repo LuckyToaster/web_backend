@@ -27,12 +27,13 @@ AppDataSource.initialize()
     .catch(error => log.handle(error))
 
 
-server.get('/api/media/:id.:ext', async (req, res) => 
+server.get('/api/media/:id.:ext', async (req, res) => {
+    res.set('Cache-control', 'public, max-age=1d') // make browser cache all the files
     res.sendFile(path.join(__dirname, '..', 'media', `${req.params.id}.${req.params.ext}`), err => {
         if (err instanceof Error) log.handle(err, 'GET', 'File not found')
         if (!res.headersSent) res.status(404).send('404 File Not Found')
     })
-);
+});
 
 // check the header with jwt from client 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
