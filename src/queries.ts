@@ -5,7 +5,6 @@ import fs from 'fs'
 
 export { 
     getThread, 
-    insertPayment, 
     insertPost, 
     nextPostId, 
     like, 
@@ -49,15 +48,6 @@ async function like(id: string) {
 async function dislike(id: string) {
     await AppDataSource.getRepository(Post)
         .query(`update post set dislikes = dislikes + 1 where id = ${parseInt(id, 10)}`)
-}
-
-async function insertPayment(id: string, amount: string, receiptUrl: string) {
-    const p = new Payment()         
-    p.stripeId = id 
-    p.amount = amount
-    p.receiptUrl = receiptUrl
-    await AppDataSource.manager.save(p)
-        .catch(e => log.handle(e, 'insertPayment'))
 }
 
 async function insertPost(msg: string, f?: Express.Multer.File) {
