@@ -52,6 +52,11 @@ async function dislike(id: string) {
 
 async function insertPost(msg: string, f?: Express.Multer.File) {
     const p = new Post()
+    if (p.msg == null || p.msg.length == 0) {
+        log.handle(new Error('not gonna insert an empty message'))
+        return
+    }
+
     p.msg = msg
     if (f) {
         if (f.size > 8388608) throw new Error(`${f.originalname} exceeds 8MB max size`)
