@@ -31,7 +31,6 @@ server.get('/api/media/:id.:ext', async (req, res) => {
     })
 });
 
-// check the header with jwt from client 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
     console.log(`Post from ${geoip.lookup(req.ip).city} with ip ${req.ip}`) // just added this
     await insertPost(req.body.msg, req.file ? req.file : null).catch(err => {
@@ -43,11 +42,15 @@ server.post('/api/insert', upload.single('file'), async (req, res) => {
 
 server.get('/api/thread', async (_, res) => res.send(await getThread()))
 
-// check the header with jwt from client 
-server.post('/api/like/:id', async (req, _) => await like(req.params.id))
+server.post('/api/like/:id', async (req, _) => {
+    await like(req.params.id)
+    console.log(`Like from ${geoip.lookup(req.ip).city} with ip ${req.ip}`)
+})
 
-// check the header with jwt from client 
-server.post('/api/dislike/:id', async (req, _) => await dislike(req.params.id))
+server.post('/api/dislike/:id', async (req, _) => {
+    await dislike(req.params.id)
+    console.log(`Dislike from ${geoip.lookup(req.ip).city} with ip ${req.ip}`)
+})
 
 server.listen(PORT, '0.0.0.0', () => console.log('=> Server running'))
 
