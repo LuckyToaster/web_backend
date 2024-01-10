@@ -44,12 +44,12 @@ async function dislike(id: string) {
 }
 
 async function insertPost(msg: string, f?: Express.Multer.File) {
-    const p = new Post()
-    if (p.msg == null || p.msg.length == 0) {
+    if (msg == null || msg.length == 0) {
         log.handle(new Error('not gonna insert an empty message'))
         return
     }
 
+    const p = new Post()
     p.msg = msg
     if (f) {
         if (f.size > 8388608) throw new Error(`${f.originalname} exceeds 8MB max size`)
@@ -59,6 +59,5 @@ async function insertPost(msg: string, f?: Express.Multer.File) {
         p.media = true
         p.mediaMimeType = ext
     }
-    await AppDataSource.manager.save(p)
-        .catch(e => log.handle(e, 'insertPost'))
+    await AppDataSource.manager.save(p).catch(e => log.handle(e, 'insertPost'))
 }
