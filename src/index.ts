@@ -38,11 +38,7 @@ server.post('/api/insert', upload.single('file'), async (req, res) => {
     res.status(201).send()
 })
 
-server.get('/api/thread', async (_, res) => {
-    res.set('Cache-control', 'public, max-age=1d')
-    res.send(await getThread())
-})
-
+server.get('/api/thread', async (_, res) => res.send(await getThread()))
 server.post('/api/like/:id', async (req, _) => await like(req.params.id))
 server.post('/api/dislike/:id', async (req, _) => await dislike(req.params.id))
 server.listen(3000, '0.0.0.0', () => console.log('=> Server running'))
