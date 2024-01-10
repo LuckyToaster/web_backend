@@ -33,7 +33,7 @@ server.get('/api/media/:id.:ext', async (req, res) => {
 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
     console.log(`Post from ${geoip.lookup(req.ip).city} with ip ${req.ip}`) // just added this
-    await insertPost(req.body.msg, req.file ? req.file : null).catch(err => {
+    await insertPost(req.body.msg.trim(), req.file ? req.file : null).catch(err => {
         res.status(500).send(err) 
         log.handle(err)
     })

@@ -44,7 +44,6 @@ async function dislike(id: string) {
 }
 
 async function insertPost(msg: string, f?: Express.Multer.File) {
-    msg.trim()
     if (msg == null || msg.length == 0) {
         log.handle(new Error('not gonna insert an empty message'))
         return
