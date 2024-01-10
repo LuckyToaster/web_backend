@@ -5,11 +5,12 @@ import fs from 'fs'
 
 export { 
     getThread, 
+    getThreadSlice,
     insertPost, 
     nextPostId, 
     like, 
     dislike, 
-    postExists, 
+    postExists
 }
 
 const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
@@ -18,6 +19,12 @@ const log = new Logger('./util.ts');
 async function getThread(): Promise<any> {
     return await AppDataSource.manager.find(Post)
         .catch(err => log.handle(err, 'getThread'))
+}
+
+async function getThreadSlice(id: number): Promise<any> {
+    return await AppDataSource.manager.getRepository(Post)
+        .query(`select * from post where id > ${id} order by id asc`)
+        .catch(e => log.handle(e, 'getThreadSlice', `cannot get posts with id higher than ${id}`))
 }
 
 async function nextPostId(): Promise<number> {
@@ -33,14 +40,14 @@ async function postExists(id: number): Promise<boolean> {
         .exist({where: {id: id}})
 }
 
-async function like(id: string) {
+async function like(id: number) {
     await AppDataSource.getRepository(Post)
-        .query(`update post set likes = likes + 1 where id = ${parseInt(id, 10)}`)
+        .query(`update post set likes = likes + 1 where id = ${id}`)
 }
 
-async function dislike(id: string) {
+async function dislike(id: number) {
     await AppDataSource.getRepository(Post)
-        .query(`update post set dislikes = dislikes + 1 where id = ${parseInt(id, 10)}`)
+        .query(`update post set dislikes = dislikes + 1 where id = ${id}`)
 }
 
 async function insertPost(msg: string, f?: Express.Multer.File) {

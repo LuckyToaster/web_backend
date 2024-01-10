@@ -1,4 +1,4 @@
-import { getThread, insertPost, nextPostId, like, dislike, postExists} from './queries'
+import { getThread, insertPost, like, dislike, getThreadSlice } from './queries'
 import { AppDataSource } from "./orm"
 import { Logger } from "./logger"
 import express from 'express'
@@ -39,7 +39,8 @@ server.post('/api/insert', upload.single('file'), async (req, res) => {
 })
 
 server.get('/api/thread', async (_, res) => res.send(await getThread()))
-server.post('/api/like/:id', async (req, _) => await like(req.params.id))
-server.post('/api/dislike/:id', async (req, _) => await dislike(req.params.id))
+server.get('/api/slice/:id', async (req, res) => res.send(await getThreadSlice(parseInt(req.params.id, 10))))
+server.post('/api/like/:id', async (req, _) => await like(parseInt(req.params.id)))
+server.post('/api/dislike/:id', async (req, _) => await dislike(parseInt(req.params.id)))
 server.listen(3000, '0.0.0.0', () => console.log('=> Server running'))
 
