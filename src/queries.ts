@@ -1,5 +1,5 @@
 import { AppDataSource } from "./orm"
-import { Post, Payment} from "./orm";
+import { Post } from "./orm";
 import { Logger } from "./logger";
 import fs from 'fs'
 
@@ -10,7 +10,6 @@ export {
     like, 
     dislike, 
     postExists, 
-    paymentExists
 }
 
 const MIMES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'audio/mp3', 'video/mp4', 'video/webm']
@@ -32,12 +31,6 @@ async function nextPostId(): Promise<number> {
 async function postExists(id: number): Promise<boolean> {
     return await AppDataSource.getRepository(Post)
         .exist({where: {id: id}})
-}
-
-// test this method
-async function paymentExists(stripeId: string): Promise<boolean> {
-    return await AppDataSource.getRepository(Payment)
-        .exist({where: {stripeId: stripeId}})
 }
 
 async function like(id: string) {

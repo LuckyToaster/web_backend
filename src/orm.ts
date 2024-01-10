@@ -31,37 +31,22 @@ export class Post {
     dislikes: number
 }
 
-@Entity() 
-export class Payment {
-    @PrimaryGeneratedColumn() 
-    id: number
-
-    @Column({type: 'text', default: 'false'})
-    stripeId: string
-
-    @CreateDateColumn() 
-    date: Date
-
-    @Column({type: 'numeric', precision: 8, scale: 2}) 
-    amount: string
-
-    @Column({type: 'text', default: 'false'})
-    receiptUrl: string
-}
-
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+
+const password = process.env.DB_PASS
+const db_name = process.env.DB_NAME
 
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
     username: "postgres",
-    password: "",
-    database: "gogocharity",
+    password: `${password}`,
+    database: `${db_name}`,
     synchronize: true,
     logging: false,
-    entities: [Post, Payment],
+    entities: [Post],
     migrations: [],
     subscribers: [],
 })
