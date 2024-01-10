@@ -33,7 +33,7 @@ server.get('/api/media/:id.:ext', async (req, res) => {
 
 // check the header with jwt from client 
 server.post('/api/insert', upload.single('file'), async (req, res) => {
-    console.log(`${geoip.lookup(req.ip).city} with ip ${req.ip}`) // just added this
+    console.log(`Post from ${geoip.lookup(req.ip).city} with ip ${req.ip}`) // just added this
     await insertPost(req.body.msg, req.file ? req.file : null).catch(err => {
         res.status(500).send(err) 
         log.handle(err)
