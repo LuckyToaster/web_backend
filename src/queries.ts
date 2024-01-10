@@ -23,7 +23,7 @@ async function getThread(): Promise<any> {
 
 async function getThreadSlice(id: number): Promise<any> {
     return await AppDataSource.manager.getRepository(Post)
-        .query(`select * from post where id > ${id} order by id asc`)
+        .query(`select * from post where id >= ${id} order by id asc`)
         .catch(e => log.handle(e, 'getThreadSlice', `cannot get posts with id higher than ${id}`))
 }
 
